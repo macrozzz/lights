@@ -7,6 +7,8 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background-color: black;
+      transition: background-color 0.3s ease;
     }
 
     .box {
@@ -18,11 +20,18 @@
       align-items: center;
       margin: 10px;
       cursor: pointer;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .box.active {
+      background-color: #000;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <div class="box" onclick="sendLightOnRequest()">Light On</div>
+  <div class="box active" onclick="sendLightOnRequest()">Light On</div>
   <div class="box" onclick="sendLightOffRequest()">Light Off</div>
 
   <script>
@@ -40,6 +49,11 @@
         .then(response => {
           if (response.ok) {
             console.log('Light on request sent successfully!');
+            document.body.style.backgroundColor = '#fff';
+            document.querySelectorAll('.box').forEach(function(box) {
+              box.classList.remove('active');
+            });
+            document.querySelector('.box.active').classList.add('active');
           } else {
             console.error('Failed to send light on request.');
           }
@@ -63,6 +77,11 @@
         .then(response => {
           if (response.ok) {
             console.log('Light off request sent successfully!');
+            document.body.style.backgroundColor = '#000';
+            document.querySelectorAll('.box').forEach(function(box) {
+              box.classList.remove('active');
+            });
+            document.querySelector('.box.active').classList.add('active');
           } else {
             console.error('Failed to send light off request.');
           }
